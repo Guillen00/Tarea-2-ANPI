@@ -1,6 +1,6 @@
 % Implementacion metodo de Jacobi en paralelo
 
-function parte1_p3(nproc)
+function x = parte1_p3(nproc)
   p = q = [1:0.1:25];
   m = 242;
   A = tridiagonal(p,q,m);
@@ -28,7 +28,7 @@ function xk = jacobi_paralelo(A,b,x0,nproc,tol,iterMax)
   pkg load parallel
   for k=1:iterMax
     f = @(i) calcular_xi(A,b,xk,i); %Funcion que se va a evaluar para cada i
-    xkm1 = pararrayfun(nproc,f,val_i).'; %Ejecuciones en paralelo
+    xkm1 = pararrayfun(nproc,f,val_i)'; %Ejecuciones en paralelo
     error = norm(A*xk-b); %Error para la iteracion
     if error < tol
       break
